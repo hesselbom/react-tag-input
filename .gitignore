@@ -10,8 +10,8 @@ lerna-debug.log*
 
 .idea/
 
-dist/
-build/
+# dist/
+# build/
 
 keys/
 
