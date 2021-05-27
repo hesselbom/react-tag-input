@@ -15,6 +15,7 @@ export interface ReactTagInputProps {
   editable?: boolean;
   readOnly?: boolean;
   removeOnBackspace?: boolean;
+  delimiters?: [number];
 }
 
 interface State {
@@ -31,10 +32,10 @@ export default class ReactTagInput extends React.Component<ReactTagInputProps, S
 
   onInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
-    const { input, validator, removeOnBackspace } = this.props;
+    const { input, validator, removeOnBackspace, delimiters } = this.props;
 
-    // On enter
-    if (e.keyCode === 13) {
+    // Check if default Enter or one of the delimiter keys was hit
+    if (e.keyCode === 13 || delimiters?.includes(e.keyCode)) {
 
       // Prevent form submission if tag input is nested in <form>
       e.preventDefault();
