@@ -7,6 +7,8 @@ type Tags = string[];
 export interface ReactTagInputProps {
   tags: Tags;
   onChange: (tags: Tags) => void;
+  input: string;
+  onInput: (input: string) => void;
   placeholder?: string;
   maxTags?: number;
   validator?: (val: string) => boolean;
@@ -16,24 +18,20 @@ export interface ReactTagInputProps {
 }
 
 interface State {
-  input: string;
 }
 
 export default class ReactTagInput extends React.Component<ReactTagInputProps, State> {
-
-  state = { input: "" };
 
   // Ref for input element
   inputRef: React.RefObject<HTMLInputElement> = React.createRef();
 
   onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ input: e.target.value });
+    this.props.onInput(e.target.value);
   }
 
   onInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
-    const { input } = this.state;
-    const { validator, removeOnBackspace } = this.props;
+    const { input, validator, removeOnBackspace } = this.props;
 
     // On enter
     if (e.keyCode === 13) {
@@ -75,7 +73,7 @@ export default class ReactTagInput extends React.Component<ReactTagInputProps, S
       tags.push(value);
       this.props.onChange(tags);
     }
-    this.setState({ input: "" });
+    this.props.onInput("");
   }
 
   removeTag = (i: number) => {
@@ -97,9 +95,7 @@ export default class ReactTagInput extends React.Component<ReactTagInputProps, S
 
   render() {
 
-    const { input } = this.state;
-
-    const { tags, placeholder, maxTags, editable, readOnly, validator, removeOnBackspace } = this.props;
+    const { input, tags, placeholder, maxTags, editable, readOnly, validator, removeOnBackspace } = this.props;
 
     const maxTagsReached = maxTags !== undefined ? tags.length >= maxTags : false;
 

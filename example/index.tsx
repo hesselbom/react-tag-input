@@ -17,15 +17,18 @@ const initialSettings: ReactTagInputProps = {
 };
 
 function Example() {
+  const [input, setInput] = React.useState<string>("");
   const [tags, setTags] = React.useState<string[]>(["machine-1", "machine-2"]);
   const [settings, setSettings] = React.useState(initialSettings);
-  console.log(tags, settings);
+  console.log(input, tags, settings);
   return (
     <>
       <ReactTagInput
         {...settings}
         tags={tags}
         onChange={(value) => setTags(value)}
+        input={input}
+        onInput={setInput}
       />
 
       <div className="form">
